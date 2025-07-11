@@ -7,18 +7,12 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>🔗 URL Shortener</h1>
-    <input type="text" id="longUrl" placeholder="Enter long URL here..." />
-    <button onclick="shortenUrl()">Shorten</button>
+  <h1>URL Shortener</h1>
+  <input type="text" id="longUrl" placeholder="Enter long URL" />
+  <button onclick="shortenUrl()">Shorten</button>
+  <div id="result"></div>
 
-    <div id="result" class="hidden">
-      <p>Your Short URL:</p>
-      <a id="shortUrl" href="#" target="_blank"></a>
-      <button onclick="copyUrl()">Copy</button>
-    </div>
-  </div>
-
+  <!-- ✅ script must be loaded AFTER everything -->
   <script src="script.js"></script>
 </body>
 </html>
