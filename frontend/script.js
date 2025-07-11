@@ -6,10 +6,11 @@ async function shortenUrl() {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/api/shorten", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
+    const res = await fetch("https://url-shortener-backend-2ohb.onrender.com/api/shorten", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ longUrl }),
+});
       },
       body: JSON.stringify({ longUrl })
     });
