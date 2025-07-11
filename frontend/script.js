@@ -1,39 +1,31 @@
 async function shortenUrl() {
-  const longUrl = document.getElementById("longUrl").value;
+  const longUrl = document.getElementById("longUrl").value.trim();
+  const resultDiv = document.getElementById("result");
+  resultDiv.innerHTML = "";
+
   if (!longUrl) {
-    alert("Please enter a URL!");
+    resultDiv.textContent = "Please enter a valid URL.";
     return;
   }
 
   try {
-    const res = await fetch("https://url-shortener-backend-2ohb.onrender.com/api/shorten", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ longUrl }),
-});
+    const response = await fetch("https://url-shortener-backend-2ohb.onrender.com/api/shorten", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({ longUrl })
     });
 
-    const data = await res.json();
+    const data = await response.json();
 
     if (data.shortUrl) {
-      const shortUrlElem = document.getElementById("shortUrl");
-      shortUrlElem.href = data.shortUrl;
-      shortUrlElem.textContent = data.shortUrl;
-      document.getElementById("result").classList.remove("hidden");
+      resultDiv.innerHTML = `<a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a>`;
     } else {
-      alert(data.error || "Failed to shorten URL");
+      resultDiv.textContent = data.error || "Something went wrong.";
     }
-  } catch (err) {
-    alert("Server error. Make sure your backend is running.");
-    console.error(err);
-  }
-}
 
-function copyUrl() {
-  const shortUrl = document.getElementById("shortUrl").textContent;
-  navigator.clipboard.writeText(shortUrl).then(() => {
-    alert("Short URL copied to clipboard!");
-  });
+  } catch (error) {
+    resultDiv.textContent = "Error shortening URL: " + error.message;
+  }
 }
